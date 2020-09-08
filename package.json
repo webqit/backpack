@@ -1,0 +1,42 @@
+{
+  "name": "@web-native-js/oauth2-app",
+  "title": "OAuth2 App",
+  "description": "OAuth2 Authorization Code Flow library for Nodejs.",
+  "keywords": [
+    "OAuth",
+    "OAuth2",
+    "JWT",
+    "authentication",
+    "authorization"
+  ],
+  "homepage": "https://www.web-native.dev",
+  "icon": "https://www.web-native.dev/icon.svg",
+  "author": {
+    "name": "Oxford Harrison",
+    "email": "oxharris.dev@gmail.com"
+  },
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-native/oauth2-app.git"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@web-native-js/commons": "^0.0.3",
+    "client-sessions": "^0.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "bugs": {
+    "url": "https://github.com/web-native/oauth2-app/issues"
+  }
+}
