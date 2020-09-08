@@ -15,7 +15,7 @@
     "name": "Oxford Harrison",
     "email": "oxharris.dev@gmail.com"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -27,7 +27,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@web-native-js/commons": "^0.0.3",
+    "@web-native-js/commons": "^0.5.1",
     "client-sessions": "^0.8.0",
     "jsonwebtoken": "^8.5.1",
     "request": "^2.88.2"
