@@ -6,9 +6,9 @@ import Url from 'url';
 import Request from 'request';
 import Sessions from 'client-sessions';
 import Jsonwebtoken from 'jsonwebtoken';
-import _intersect from '@web-native-js/commons/arr/intersect.js';
-import _arrFrom from '@web-native-js/commons/arr/from.js';
-import _promise from '@web-native-js/commons/js/promise.js';
+import _intersect from '@onephrase/util/arr/intersect.js';
+import _arrFrom from '@onephrase/util/arr/from.js';
+import _promise from '@onephrase/util/js/promise.js';
 
 /**
  * OAuth util class
