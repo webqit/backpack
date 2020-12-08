@@ -1,23 +1,20 @@
 {
-  "name": "@onephrase/oauth2-node-client",
-  "title": "OAuth2 Nodejs Client",
-  "description": "OAuth2 Authorization Code Flow library for Nodejs.",
+  "name": "@webqit/backpack",
+  "title": "Backpack",
+  "description": "Nodejs utilities.",
   "keywords": [
-    "OAuth",
-    "OAuth2",
-    "JWT",
-    "authentication",
-    "authorization"
+    "nodejs",
+    "utilities"
   ],
-  "homepage": "https://onephrase.dev/package/oauth2-node-client",
+  "homepage": "https://webqit.dev/tooling/backpack",
   "version": "0.0.3",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onephrase/oauth2-node-client.git"
+    "url": "git+https://github.com/webqit/backpack.git"
   },
   "bugs": {
-    "url": "https://github.com/onephrase/oauth2-node-client/issues"
+    "url": "https://github.com/webqit/backpack/issues"
   },
   "type": "module",
   "main": "src/index.js",
@@ -25,10 +22,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@onephrase/util": "^0.5.5",
-    "client-sessions": "^0.8.0",
-    "jsonwebtoken": "^8.5.1",
-    "request": "^2.88.2"
+    "@webqit/util": "^0.7.0",
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
+    "figlet": "^1.5.0",
+    "prompts": "^2.4.0"
   },
   "devDependencies": {
     "webpack": "^4.41.6",
@@ -51,10 +50,10 @@
     ],
     "config": {
       "patreonUsername": "ox_harris",
-      "githubUsername": "onephrase",
-      "githubRepository": "oauth2-node-client",
-      "githubSlug": "onephrase/oauth2-node-client",
-      "npmPackageName": "@onephrase/oauth2-node-client"
+      "githubUsername": "webqit",
+      "githubRepository": "backpack",
+      "githubSlug": "webqit/backpack",
+      "npmPackageName": "@webqit/backpack"
     }
   }
 }
