@@ -1,13 +1,15 @@
 {
   "name": "@webqit/backpack",
   "title": "Backpack",
-  "description": "Nodejs utilities.",
+  "description": "Backend JavaScript utilities.",
   "keywords": [
     "nodejs",
+    "code-generation",
+    "cli",
     "utilities"
   ],
-  "homepage": "https://webqit.dev/tooling/backpack",
-  "version": "0.0.3",
+  "homepage": "https://webqit.io/tooling/backpack",
+  "version": "0.0.31",
   "license": "MIT",
   "repository": {
     "type": "git",

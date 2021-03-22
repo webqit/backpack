@@ -4,7 +4,6 @@
  */
 import Fs from 'fs';
 import Path from 'path';
-import Lexer from '@webqit/util/str/Lexer.js';
 import _wrapped from '@webqit/util/str/wrapped.js';
 import _isObject from '@webqit/util/js/isObject.js';
 
@@ -49,11 +48,14 @@ export function write(vars, file) {
  */
 export function parse(str) {
     var parsed = {};
-    var tokens = Lexer.split(str, ["\r\n"]);
+    var tokens = str.split(/\r\n/g);
     tokens.forEach(token => {
-        var [ key, val ] = Lexer.split(token, ["="]).map(t => t + '');
+        if (token.trim().startsWith('//') || !token.includes('=')) {
+            return;
+        }
+        var [ key, val ] = token.split('=');
         if (val && _wrapped(val, '{', '}')) {
-            val = JSON.parse(val);
+            //val = JSON.parse(val);
         }
         parsed[key] = val;
     });
