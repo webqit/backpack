@@ -48,7 +48,7 @@ export function write(vars, file) {
  */
 export function parse(str) {
     var parsed = {};
-    var tokens = str.split(/\r\n/g);
+    var tokens = str.split(/\r?\n/g);
     tokens.forEach(token => {
         if (token.trim().startsWith('//') || !token.includes('=')) {
             return;
