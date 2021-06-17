@@ -21,7 +21,8 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postversion": "npm publish",
+    "postpublish": "git push && git push --tags"
   },
   "dependencies": {
     "@webqit/util": "^0.7.0",
