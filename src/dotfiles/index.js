@@ -21,5 +21,5 @@ export {
  * @anyExists
  */
 export function anyExists(files, nameCallback = null) {
-    return _unique(files).reduce((prev, file) => prev || (Fs.existsSync(nameCallback ? nameCallback(file) : file) ? file : false), false);
+    return _unique(files).reduce((prev, file) => prev !== false ? prev : (Fs.existsSync(nameCallback ? nameCallback(file) : file) ? file : false), false);
 }
