@@ -113,6 +113,9 @@ export function Promptx(questions, options = {}) {
  */
 export async function Promptr(questions, values, controls = {}) {
 
+    if (_isFunction(values)) {
+        values = values();
+    }
     // ----------------
     normalizeControls(controls);
     // ----------------    
