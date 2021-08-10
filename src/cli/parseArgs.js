@@ -19,19 +19,22 @@ export default function(argv) {
         ellipsis = true;
     }
     args.forEach(arg => {
-        if (arg.indexOf('+=') > -1 || arg.indexOf('=') > -1 || arg.startsWith('#')) {
+        if (arg.indexOf('=') > -1 || arg.startsWith('--')) {
+            var target = options;
+            if (arg.startsWith('--')) {
+                target = flags;
+                arg = arg.substr(2);
+            }
             if (arg.indexOf('+=') > -1) {
                 arg = arg.split('+=');
                 var arg_name = arg[0];
-                options[arg_name] = _arrFrom(options[arg_name]);
-                options[arg_name].push(arg[1]);
+                target[arg_name] = _arrFrom(target[arg_name]);
+                target[arg_name].push(arg[1]);
             } else {
                 arg = arg.split('=');
                 var arg_name = arg[0];
-                options[arg_name] = arg[1] === 'TRUE' ? true : (arg[1] === 'FALSE' ? false : arg[1]);
+                target[arg_name] = arg.length === 1 || arg[1] === 'TRUE' ? true : (arg[1] === 'FALSE' ? false : arg[1]);
             }
-        } else if (arg.startsWith('--')) {
-            flags[arg.substr(2)] = true;
         } else {
             keywords[arg] = true;
         }
