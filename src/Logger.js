@@ -2,13 +2,8 @@
 /**
  * imports
  */
-import _isObject from '@webqit/util/js/isObject.js';
-import _isArray from '@webqit/util/js/isArray.js';
-import _isNumber from '@webqit/util/js/isNumber.js';
-import _isString from '@webqit/util/js/isString.js';
-import _isNull from '@webqit/util/js/isNull.js';
-import _isUndefined from '@webqit/util/js/isUndefined.js';
-import _each from '@webqit/util/obj/each.js';
+import { _isArray, _isObject, _isNumber, _isString, _isNull, _isUndefined } from '@webqit/util/js/index.js';
+import { _each } from '@webqit/util/obj/index.js';
 import Chalk from 'chalk';
 import Clui from 'clui';
 import Figlet from 'figlet';
@@ -17,7 +12,7 @@ import Clear from 'clear';
 /**
  * Initializes a server on the given working directory.
  */
-export default class Ui {
+export default class Logger {
 
     // @alias: console.log()
     static log(...args) {
@@ -85,7 +80,7 @@ export default class Ui {
  * @tokens
  */
 
-Ui.style = {
+Logger.style = {
     
     // @val()
     val(input, indentation) {

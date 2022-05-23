@@ -2,8 +2,7 @@
 /**
  * @imports
  */
-import _arrLast from '@webqit/util/arr/last.js';
-import _arrFrom from '@webqit/util/arr/from.js';
+import { _last as _arrLast, _from as _arrFrom } from '@webqit/util/arr/index.js';
 
 /**
  * Parses command-line args to a more-usable format
@@ -46,4 +45,4 @@ export default function(argv) {
         options,
         ellipsis,
     }
-};
+}

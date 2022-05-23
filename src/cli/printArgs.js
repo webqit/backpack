@@ -3,8 +3,7 @@
  * imports
  */
 import Chalk from 'chalk';
-import _isTypeObject from '@webqit/util/js/isTypeObject.js';
-import _isFunction from '@webqit/util/js/isFunction.js';
+import { _isFunction, _isTypeObject } from '@webqit/util/js/index.js';
 
 /**
  * Prints args
@@ -27,4 +26,4 @@ export default function print(params, indentation = 0, filter = true) {
             print(params[prop], indentation + 1, filter);
         }
     });
-};
+}

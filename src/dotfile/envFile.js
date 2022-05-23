@@ -4,8 +4,8 @@
  */
 import Fs from 'fs';
 import Path from 'path';
-import _wrapped from '@webqit/util/str/wrapped.js';
-import _isObject from '@webqit/util/js/isObject.js';
+import { _wrapped } from '@webqit/util/str/index.js';
+import { _isObject } from '@webqit/util/js/index.js';
 
 /**
  * Reads contents of the .env file as an object.
@@ -20,7 +20,7 @@ export function read(file) {
     if (Fs.existsSync(file)) {
         return parse(Fs.readFileSync(file).toString());
     }
-};
+}
 
 /**
  * Creates a .env file from an object.
@@ -37,7 +37,7 @@ export function write(vars, file) {
         Fs.mkdirSync(dir, {recursive:true});
     }
     return Fs.writeFileSync(file, stringify(vars));
-};
+}
 
 /**
  * Parses a string into object vars.
@@ -60,7 +60,7 @@ export function parse(str) {
         parsed[key] = val;
     });
     return parsed;
-};
+}
 
 /**
  * Stringifies object vars back into a string.
@@ -74,4 +74,4 @@ export function stringify(obj) {
         tokens.push(key + (!key.startsWith('#') ? '=' : '') + (_isObject(obj[key]) ? JSON.stringify(obj[key]) : obj[key] || ''));
         return tokens;
     }, []).join("\r\n");
-};
+}

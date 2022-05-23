@@ -4,8 +4,8 @@
  */
 import Fs from 'fs';
 import Path from 'path';
-import _isArray from '@webqit/util/js/isArray.js'
-import _each from '@webqit/util/obj/each.js'
+import { _isArray } from '@webqit/util/js/index.js'
+import { _each } from '@webqit/util/obj/index.js'
 
 /**
  * Generates a JavaScript source file
@@ -59,4 +59,4 @@ export function write(data, outputFile, description) {
 
     Fs.mkdirSync(Path.dirname(outputFile), {recursive:true});
     Fs.writeFileSync(outputFile, source);
-};
+}

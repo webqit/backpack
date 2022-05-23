@@ -3,30 +3,24 @@
  * @imports
  */
 import Path from 'path';
-import _arrFrom from '@webqit/util/arr/from.js';
-import _isObject from '@webqit/util/js/isObject.js';
-import _isArray from '@webqit/util/js/isArray.js';
-import _isString from '@webqit/util/js/isString.js';
-import _isNumeric from '@webqit/util/js/isNumeric.js';
-import _isFunction from '@webqit/util/js/isFunction.js';
-import _isEmpty from '@webqit/util/js/isEmpty.js';
-import _toTitle from '@webqit/util/str/toTitle.js';
-import _all from '@webqit/util/arr/all.js';
+import { _toTitle } from '@webqit/util/str/index.js';
+import { _all, _from as _arrFrom } from '@webqit/util/arr/index.js';
+import { _isObject, _isArray, _isString, _isNumeric, _isFunction, _isEmpty } from '@webqit/util/js/index.js';
 import Prompts from 'prompts';
-import Ui from './Ui.js';
+import Logger from '../Logger.js';
 
 /**
  * @Prompt-normal
  */
-export function Promptx(questions, options = {}) {
+export default function Promptx(schema, options = {}) {
 
     // ------------
     // Capture recursive types
     // ------------
 
-    questions = _arrFrom(questions, false).map(question => {
-        if (question.questions) {
-            // The prompt for the questions
+    schema = _arrFrom(schema, false).map(question => {
+        if (question.schema) {
+            // The prompt for the schema
             if (!question.controls) {
                 question.controls = {}; 
             }
@@ -40,7 +34,7 @@ export function Promptx(questions, options = {}) {
             const indentation = (typeof question.indentation === 'number' ? question.indentation : 0) + (question._indentation || 0);
             const prompt = 'CONFIGURE';//question.controls.add.active + '/' + question.controls.cta.active;
             if (!question.controls.message) {
-                question.controls.message = Ui.f`${prompt} ${question.name}`;
+                question.controls.message = Logger.f`${prompt} ${question.name}`;
             }
             if (!question.controls.message.startsWith(' ')) {
                 question.controls.message = (' '.repeat(indentation)) + question.controls.message; 
@@ -76,13 +70,13 @@ export function Promptx(questions, options = {}) {
     // Run...
     // ------------
 
-    return Prompts(questions, {onSubmit: async function(question, answer, answers) {
+    return Prompts(schema, {onSubmit: async function(question, answer, answers) {
         if (question.exclude) {
             delete answers[question.name];
         } else if (question.src) {
             const actuallyControls = question;
             const actuallyQuestion = question.src;
-            const subQuestions = _arrFrom(actuallyQuestion.questions, false);
+            const subQuestions = _arrFrom(actuallyQuestion.schema, false);
             const indentation = (typeof actuallyQuestion.indentation === 'number' ? actuallyQuestion.indentation : 2) + (actuallyQuestion._indentation || 0);
             if (indentation) {
                 subQuestions.forEach(_question => {
@@ -104,14 +98,14 @@ export function Promptx(questions, options = {}) {
         }
     }, ...options});
 
-};
+}
 
 /**
  * -----------------
  * Validators
  * -----------------
  */
-export async function Promptr(questions, values, controls = {}) {
+export async function Promptr(schema, values, controls = {}) {
 
     if (_isFunction(values)) {
         values = values();
@@ -125,14 +119,14 @@ export async function Promptr(questions, values, controls = {}) {
         var nameKey = (_isObject(controls.combomode) ? controls.combomode.name : '') || 'name';
         var valueKey = (_isObject(controls.combomode) ? controls.combomode.value : '') || 'value';
         // -------------
-        var _questions = questions;
+        var _schema = schema;
         if (controls.combomode) {
-            _questions = withInitials(questions, [keys[index], values[keys[index]]]);
+            _schema = withInitials(schema, [keys[index], values[keys[index]]]);
         } else {
-            _questions = withInitials(questions, values[keys[index]] || []);
+            _schema = withInitials(schema, values[keys[index]] || []);
         }
         // -------------
-        const subAnswers = await Promptx(_questions);
+        const subAnswers = await Promptx(_schema);
         // -------------
         // Handle prompt...
         if (_isFunction(controls.add.onSubmit)) {
@@ -174,20 +168,20 @@ export async function Promptr(questions, values, controls = {}) {
     };
     await runPromts(0);
     return answers;
-};
+}
 
 /**
  * Normalize controls.
  */
 const normalizeControls = controls => {
     const indentation = (typeof controls.src.indentation === 'number' ? controls.src.indentation : 2) + (controls.src._indentation || 0);
-    // The prompt for the questions
+    // The prompt for the schema
     if (!controls.name) {
         controls.name = 'question'; 
     }
     //onRender(kleur) { this.msg = kleur.green(this.msg); },
     // ----------------
-    // The "add" prompt for the questions
+    // The "add" prompt for the schema
     if (!controls.add) {
         controls.add = {}; 
     }
@@ -198,7 +192,7 @@ const normalizeControls = controls => {
         controls.add.type = 'toggle';
     }
     if (!controls.add.message) {
-        controls.add.message = Ui.f`${_toTitle(controls.add.name)} another ${controls.name}?`;
+        controls.add.message = Logger.f`${_toTitle(controls.add.name)} another ${controls.name}?`;
     }
     if (!controls.add.message.startsWith(' ')) {
         controls.add.message = (' '.repeat(indentation)) + controls.add.message;
@@ -209,7 +203,7 @@ const normalizeControls = controls => {
     if (!controls.add.inactive) {
         controls.add.inactive = 'NO';
     }
-    // The "cta" prompt for the questions
+    // The "cta" prompt for the schema
     if (!controls.cta) {
         controls.cta = {}; 
     }
@@ -218,7 +212,7 @@ const normalizeControls = controls => {
         controls.cta.type = 'toggle';
     }
     if (!controls.cta.message) {
-        controls.cta.message = Ui.f`${_toTitle(controls.cta.name)} this ${controls.name}?`;
+        controls.cta.message = Logger.f`${_toTitle(controls.cta.name)} this ${controls.name}?`;
     }
     if (!controls.cta.message.startsWith(' ')) {
         controls.cta.message = (' '.repeat(indentation)) + controls.cta.message; 
@@ -232,13 +226,13 @@ const normalizeControls = controls => {
 };
 
 /**
- * Injects initials into questions.
+ * Injects initials into schema.
  */
-const withInitials = (questions, initials) => {
-    return questions.map((question, i) => {
+const withInitials = (schema, initials) => {
+    return schema.map((question, i) => {
         const _question = {...question};
-        if (_question.questions) {
-            _question.questions = _question.questions.slice(0);
+        if (_question.schema) {
+            _question.schema = _question.schema.slice(0);
         }
         if (_question.controls) {
             _question.controls = {..._question.controls};
@@ -282,7 +276,7 @@ export function validateAs(types, msgSfx = ':') {
         }
         return test;
     };
-};
+}
 // Input
 validateAs.input = (val, msgSfx) => true;
 // number
@@ -305,7 +299,7 @@ export function transformAs(types) {
         }
         return transformed;
     };
-};
+}
 // path
 transformAs.path = val => Path.resolve(val);
 // multiple
