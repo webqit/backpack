@@ -32,7 +32,9 @@ export default class Cli {
             let pathname = `${name}${this.nsSeparator}${namespace}`.toLowerCase();
             if (!_isClass(piObj[name]) && _isFunction(piObj[name])) {
                 if (!piObj[name]['@desc']) this.availableCommands[pathname] = piObj[name]['@desc'];
-            } else if (_isObject(piObj[name])) discoverCommands(pathname, piObj[name]);
+            } else if (_isObject(piObj[name]) && name.substring(0, 1) === name.substring(0, 1).toLowerCase()) {
+                discoverCommands(pathname, piObj[name]);
+            }
         });
         Object.keys(this.api).forEach(name => {
             if (name === 'config') discoverConfigs(name, this.api[name]);
