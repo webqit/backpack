@@ -4,10 +4,11 @@
  * @imports
  */
 import { _toTitle, _beforeLast } from '@webqit/util/str/index.js';
-import { _merge, _set, _get } from '@webqit/util/obj/index.js';
+import { _set, _get } from '@webqit/util/obj/index.js';
 import { _isClass, _isFunction, _isObject, _isEmpty, _isString, _isArray } from '@webqit/util/js/index.js';
 import parseArgs from './parseArgs.js';
 import Promptx from './Promptx.js';
+import { merge } from '../util.js';
 
 export default class Cli {
 
@@ -119,7 +120,7 @@ export default class Cli {
                 givenOptionsList.forEach(path => {
                     _set(optionsStructured, path.split('.'), options[path]);
                 });
-                await configurator.write(this.merge(config, optionsStructured, 'patch'));
+                await configurator.write(merge(config, optionsStructured, 'patch'));
             } else {
                 await Promptx(configurator.getSchema(config)).then(async _config => {
                     await configurator.write(_config);
@@ -141,23 +142,4 @@ export default class Cli {
         return merge(...arguments);
     }
 
-}
-
-function merge(a, b, arrFn = 0, keys = []) {
-    let result = arguments.length > 3 ? [] : {};
-    (arguments.length > 3 ? keys : Object.keys(a).concat(Object.keys(b))).forEach(k => {
-        if (_isObject(a[k]) && _isObject(b[k])) {
-            result[k] = merge(a[k], b[k], arrFn);
-        } else if (_isArray(a[k]) && _isArray(b[k]) && arrFn) {
-            if (arrFn === 'merge') {
-                result[k] = a[k].concat(b[k]);
-            } else if (arrFn === 'patch') {
-                let longer = a[k].length > b[k].length ? a[k] : b[k];
-                result[k] = merge(a[k], b[k], arrFn, Object.keys(longer).map(k => parseInt(k)));
-            }
-        } else {
-            result[k] = k in b ? b[k] : a[k];
-        }
-    });
-    return result;
 }

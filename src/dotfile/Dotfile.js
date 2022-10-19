@@ -3,9 +3,9 @@
  * @imports
  */
 import Path from 'path';
-import { _merge } from '@webqit/util/obj/index.js';
 import { jsonFile, envFile, anyExists } from './index.js';
 import { initialGetIndex } from '../cli/Promptx.js';
+import { merge } from '../util.js';
 
 /**
  * @exports
@@ -27,6 +27,14 @@ export default class Dotfile {
         if (this.isEnv) {
             this.availableEnvExt = anyExists([ this.givenExt, '', '.example' ], ext => this.resolveEnvFileName(ext));
         }
+    }
+    
+    merge(a, b, arrFn = null) {
+        return merge(...arguments);
+    }
+    
+    static merge(a, b, arrFn = null) {
+        return merge(...arguments);
     }
 
     // ------------
@@ -59,8 +67,8 @@ export default class Dotfile {
         if (this.isEnv) {
             let config2 = { entries: envFile.read(this.resolveEnvFileName(this.availableEnvExt)) || {}, };
             // The rewrite below is because entries should not also appear in json
-            //config.entries = _merge(config.entries || {}, config2.entries);
-            config = _merge(config, config2);
+            //config.entries = this.merge(config.entries || {}, config2.entries);
+            config = this.merge(config, config2);
         }
         return this.withDefaults(config);
     }
