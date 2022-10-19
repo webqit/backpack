@@ -84,17 +84,21 @@ export default function Promptx(schema, options = {}) {
                     _question._indentation = indentation;
                 });
             }
-            if (actuallyControls.srcType === 'recursive') {
-                if (answer) {
+            if (answer) {
+                if (actuallyControls.srcType === 'recursive') {
                     answers[actuallyQuestion.name] = await Promptr(subQuestions, actuallyQuestion.initial, actuallyControls);
-                }
+                } else {
+                    var _subQuestions = subQuestions;
+                    if (actuallyQuestion.initial) {
+                        _subQuestions = withInitials(subQuestions, actuallyQuestion.initial);
+                    }
+                    answers[actuallyQuestion.name] = (await Promptx(_subQuestions));    
+                }    
             } else {
-                var _subQuestions = subQuestions;
-                if (actuallyQuestion.initial) {
-                    _subQuestions = withInitials(subQuestions, actuallyQuestion.initial);
-                }
-                answers[actuallyQuestion.name] = answer ? (await Promptx(_subQuestions)) : {};    
-            }    
+                answers[actuallyQuestion.name] = actuallyQuestion.initial || (
+                    actuallyControls.srcType === 'recursive' ? [] : {}
+                );
+            }
         }
     }, ...options});
 
