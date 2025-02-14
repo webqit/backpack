@@ -71,6 +71,9 @@ export default function Promptx(schema, options = {}) {
     // ------------
 
     return Prompts(schema, {onSubmit: async function(question, answer, answers) {
+        if (question.type === 'list' && (answer = answer.filter((s) => s.trim()))) {
+            answers[question.name] = answer;
+        }
         if (question.exclude) {
             delete answers[question.name];
         } else if (question.src) {
