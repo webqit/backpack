@@ -53,7 +53,8 @@ export function parse(str) {
         if (token.trim().startsWith('//') || !token.includes('=')) {
             return;
         }
-        var [ key, val ] = token.split('=');
+        var [ key, ...val ] = token.split('=');
+        val = val.join('=');
         if (val && _wrapped(val, '{', '}')) {
             //val = JSON.parse(val);
         }
